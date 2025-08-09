@@ -17,7 +17,10 @@ class _DeportesFavoritosPageState extends State<DeportesFavoritosPage> {
   ];
   List<Map<String, dynamic>> favoriteMapDeportList = [];
 
-  Widget buildDeportButton(Map<String, dynamic> deportMap) {
+  Widget buildDeportButton(
+    Map<String, dynamic> deportMap,
+    bool isOnBoxContainer,
+  ) {
     return GestureDetector(
       onTap: () {
         if (!deportMap["isFavorite"]) {
@@ -32,14 +35,23 @@ class _DeportesFavoritosPageState extends State<DeportesFavoritosPage> {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(
-          color: deportMap["isFavorite"] ? Colors.orange : Colors.white,
+          color: isOnBoxContainer
+              ? Colors.white
+              : deportMap["isFavorite"]
+              ? Colors.orange
+              : Colors.white,
+
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: Colors.orange, width: 2),
         ),
         child: Text(
           deportMap["name"],
           style: TextStyle(
-            color: deportMap["isFavorite"] ? Colors.white : Colors.black,
+            color: isOnBoxContainer
+                ? Colors.black
+                : deportMap["isFavorite"]
+                ? Colors.white
+                : Colors.black,
           ),
         ),
       ),
@@ -82,7 +94,7 @@ class _DeportesFavoritosPageState extends State<DeportesFavoritosPage> {
                   alignment: WrapAlignment.spaceAround,
                   children: [
                     for (int i = 0; i < deportMapList.length; i++)
-                      buildDeportButton(deportMapList[i]),
+                      buildDeportButton(deportMapList[i], false),
                   ],
                 ),
               ),
@@ -103,7 +115,7 @@ class _DeportesFavoritosPageState extends State<DeportesFavoritosPage> {
                   alignment: WrapAlignment.spaceAround,
                   children: [
                     for (int j = 0; j < favoriteMapDeportList.length; j++)
-                      buildDeportButton(favoriteMapDeportList[j]),
+                      buildDeportButton(favoriteMapDeportList[j], true),
                   ],
                 ),
               ),
