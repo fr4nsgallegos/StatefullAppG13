@@ -21,6 +21,43 @@ class _DeportesFavoritosPageState extends State<DeportesFavoritosPage> {
     Map<String, dynamic> deportMap,
     bool isOnBoxContainer,
   ) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+        backgroundColor: isOnBoxContainer
+            ? Colors.white
+            : deportMap["isFavorite"]
+            ? Colors.orange
+            : Colors.white,
+        foregroundColor: isOnBoxContainer
+            ? Colors.black
+            : deportMap["isFavorite"]
+            ? Colors.white
+            : Colors.black,
+
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(10),
+          side: BorderSide(color: Colors.orange, width: 2),
+        ),
+      ),
+      onPressed: () {
+        if (!deportMap["isFavorite"]) {
+          deportMap["isFavorite"] = true;
+          favoriteMapDeportList.add(deportMap);
+        } else {
+          deportMap["isFavorite"] = false;
+          favoriteMapDeportList.remove(deportMap);
+        }
+        setState(() {});
+      },
+      child: Text(deportMap["name"]),
+    );
+  }
+
+  Widget buildDeportButtonContainer(
+    Map<String, dynamic> deportMap,
+    bool isOnBoxContainer,
+  ) {
     return GestureDetector(
       onTap: () {
         if (!deportMap["isFavorite"]) {
