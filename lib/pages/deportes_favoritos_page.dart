@@ -1,16 +1,48 @@
 import 'package:flutter/material.dart';
 
-class DeportesFavoritosPage extends StatelessWidget {
-  const DeportesFavoritosPage({super.key});
+class DeportesFavoritosPage extends StatefulWidget {
+  @override
+  State<DeportesFavoritosPage> createState() => _DeportesFavoritosPageState();
+}
 
-  Widget buildDeportButton(String deport) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.orange, width: 2),
+class _DeportesFavoritosPageState extends State<DeportesFavoritosPage> {
+  List<Map<String, dynamic>> deportMapList = [
+    {"name": "Gimnasio", "isFavorite": false},
+    {"name": "Crossfit", "isFavorite": false},
+    {"name": "Corredor", "isFavorite": false},
+    {"name": "Baloncesto", "isFavorite": false},
+    {"name": "Nadador", "isFavorite": false},
+    {"name": "Golf", "isFavorite": false},
+    {"name": "Tenis", "isFavorite": false},
+  ];
+  List<Map<String, dynamic>> favoriteMapDeportList = [];
+
+  Widget buildDeportButton(Map<String, dynamic> deportMap) {
+    return GestureDetector(
+      onTap: () {
+        if (!deportMap["isFavorite"]) {
+          deportMap["isFavorite"] = true;
+          favoriteMapDeportList.add(deportMap);
+        } else {
+          deportMap["isFavorite"] = false;
+          favoriteMapDeportList.remove(deportMap);
+        }
+        setState(() {});
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+        decoration: BoxDecoration(
+          color: deportMap["isFavorite"] ? Colors.orange : Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.orange, width: 2),
+        ),
+        child: Text(
+          deportMap["name"],
+          style: TextStyle(
+            color: deportMap["isFavorite"] ? Colors.white : Colors.black,
+          ),
+        ),
       ),
-      child: Text(deport),
     );
   }
 
@@ -49,14 +81,8 @@ class DeportesFavoritosPage extends StatelessWidget {
                   runSpacing: 8, //espaciado vertical entre elementos
                   alignment: WrapAlignment.spaceAround,
                   children: [
-                    buildDeportButton("Gimnasio"),
-                    buildDeportButton("Gimnasio"),
-                    buildDeportButton("Gimnasio"),
-                    buildDeportButton("Gimnasio"),
-                    buildDeportButton("Gimnasio"),
-                    buildDeportButton("Gimnasio"),
-                    buildDeportButton("Crossfit"),
-                    buildDeportButton("Baloncesto"),
+                    for (int i = 0; i < deportMapList.length; i++)
+                      buildDeportButton(deportMapList[i]),
                   ],
                 ),
               ),
@@ -76,14 +102,8 @@ class DeportesFavoritosPage extends StatelessWidget {
                   runSpacing: 8, //espaciado vertical entre elementos
                   alignment: WrapAlignment.spaceAround,
                   children: [
-                    buildDeportButton("Gimnasio"),
-                    buildDeportButton("Gimnasio"),
-                    buildDeportButton("Gimnasio"),
-                    buildDeportButton("Gimnasio"),
-                    buildDeportButton("Gimnasio"),
-                    buildDeportButton("Gimnasio"),
-                    buildDeportButton("Crossfit"),
-                    buildDeportButton("Baloncesto"),
+                    for (int j = 0; j < favoriteMapDeportList.length; j++)
+                      buildDeportButton(favoriteMapDeportList[j]),
                   ],
                 ),
               ),
