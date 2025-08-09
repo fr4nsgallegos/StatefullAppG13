@@ -53,12 +53,7 @@ class _HomeState extends State<HomePage> {
   //   },
   // ];
 
-  Widget buildMenuCard(
-    double screenWidth,
-    // Map<String, dynamic> menuMap,
-    MenuModel menuModel,
-    int index,
-  ) {
+  Widget buildMenuCard(double screenWidth, MenuModel menuModel, int index) {
     // menuMap["isSelected"] = selectedMenuIndex == index;
     menuModel.isSelected = selectedMenuIndex == index;
     return GestureDetector(
